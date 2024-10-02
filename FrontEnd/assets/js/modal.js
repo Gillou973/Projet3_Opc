@@ -11,6 +11,73 @@ const backArrow = document.getElementById("backArrow");
 // API URL
 const apiUrl = 'http://localhost:5678/api/works';
 
+
+
+// Gestion de l'aperçu de la photo
+// Afficher l’aperçu de l’image et cacher l’icône et le texte lorsque la photo est sélectionnée
+const photoPreviewContainer = document.getElementById('photoPreviewContainer');
+const photoPreviewText = document.getElementById('photoPreviewText');
+const photoPreview = document.getElementById('photoPreview');
+const photoUpload = document.getElementById('photoUpload');
+const iconPreview = document.getElementById('iconPreview');
+const infoText = document.getElementById('infoText');
+const errorMessage = document.createElement('p'); // Pour afficher un message d'erreur
+errorMessage.style.color = 'red';
+photoPreviewContainer.appendChild(errorMessage);
+
+photoPreviewContainer.addEventListener('click', () => {
+  photoUpload.click(); // Ouvre le sélecteur de fichiers
+});
+
+photoUpload.addEventListener('change', function() {
+  const file = this.files[0];
+  const validTypes = ['image/jpeg', 'image/png']; // Types acceptés
+  const maxSize = 4 * 1024 * 1024; // Taille maximale en octets (4 Mo)
+
+  if (file) {
+    // Vérifier le type de fichier
+    if (!validTypes.includes(file.type)) {
+      showError('Le format de l’image est invalide. Seuls les fichiers JPG et PNG sont acceptés.');
+      //errorMessage.textContent = 'Veuillez sélectionner une image au format JPG ou PNG.';
+      //resetPreview();
+      resetPhotoPreview()
+
+      return;
+    }
+
+    // Vérifier la taille du fichier
+    if (file.size > maxSize) {
+      showError('La taille de l’image dépasse 4 Mo. Veuillez choisir une image plus petite.');
+      //errorMessage.textContent = 'La taille de l’image ne doit pas dépasser 4 Mo.';
+      //resetPreview();
+      resetPhotoPreview()
+      return;
+    }
+
+    // Si tout est valide, on lit l'image
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      errorMessage.textContent = ''; // On efface le message d'erreur
+      photoPreviewText.style.display = 'none'; // Masque le texte
+      iconPreview.style.display = 'none'; // Masque l'icône
+      infoText.style.display = 'none'; // Masque le Texte (jpg, png : 4mo max)
+      photoPreview.style.display = 'block'; // Affiche l'aperçu
+      photoPreview.src = event.target.result; // Affiche l'image sélectionnée
+    };
+    reader.readAsDataURL(file); // Lit l'image
+  }
+});
+/*
+function resetPreview() {
+  photoPreviewText.style.display = 'block'; // Réaffiche le texte
+  iconPreview.style.display = 'block'; // Réaffiche l'icône
+  infoText.style.display = 'block'; // Réaffiche l'info texte
+  photoPreview.style.display = 'none'; // Cache l'aperçu
+  photoPreview.src = ''; // Réinitialise l'aperçu
+}
+*/
+
+/*
 // Gestion de l'aperçu de la photo
 // Afficher l’aperçu de l’image et cacher l’icône et le texte lorsque la photo est sélectionnée
 const photoPreviewContainer = document.getElementById('photoPreviewContainer');
@@ -38,6 +105,8 @@ photoUpload.addEventListener('change', function() {
     reader.readAsDataURL(file); // Lit l'image
   }
 });
+*/
+
 
 
 // Appel à l'API pour récupérer les catégories dans la modal

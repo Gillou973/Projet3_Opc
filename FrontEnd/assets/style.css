@@ -399,6 +399,7 @@ footer nav ul {
 
 #infoText {
 	z-index: 1;
+	color: #444444;
 }
 
 .photoTitle input, .photoCategory select {
