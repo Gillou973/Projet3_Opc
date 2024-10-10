@@ -154,6 +154,8 @@ function openEditView(photoId, title, category) {
     // Pré-remplir les champs avec les informations actuelles de la photo
     document.getElementById('photoTitle').value = title;
     document.getElementById('photoCategory').value = category;
+    console.log(title);
+    console.log(category);
 }
   
 // Fonction pour réinitialiser l'aperçu des photos après la validation
