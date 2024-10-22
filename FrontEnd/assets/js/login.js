@@ -11,7 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
 
     // Appel API pour l'authentification
     const response = await loginApiCall(email, password);
-    //return console.log(response);
+
 
     if (response.success) {
 
@@ -23,7 +23,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
         // Sauvegarder le token si nécessaire et rediriger
         localStorage.setItem('authToken', response.token); // Stocker le token d'authentification
         setTimeout(function() {
-            //window.location.href = "index.html";
+           
             window.location.href = 'index.html'; // Redirection vers une autre page
         }, 1500);
         //window.location.href = 'index.html'; // Redirection vers une autre page
